@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cg-menu-root-food</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="menu">
+    <div class="menu-item">
+        <div class="menu-item-index">
+            <p>2020 - 2021</p>
+            <p>noi</p>
+        </div>
+        <div class="menu-link menu-link-main">
+            <p>noi</p>
+        </div>
+        <div class="menu-link menu-link-hover">
+            <p>noi</p>
+        </div>
+        <div class="menu-img">
+            <img src="./assets/noi.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="menu-item">
+        <div class="menu-item-index">
+            <p>2023 - ongoing</p>
+            <p>Sheila</p>
+        </div>
+        <div class="menu-link menu-link-main">
+            <p>Sheila</p>
+        </div>
+        <div class="menu-link menu-link-hover">
+            <p>Sheila</p>
+        </div>
+        <div class="menu-img">
+            <img src="./assets/sheila.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="menu-item">
+        <div class="menu-item-index">
+            <p>2020</p>
+            <p>laura</p>
+        </div>
+        <div class="menu-link menu-link-main">
+            <p>laura</p>
+        </div>
+        <div class="menu-link menu-link-hover">
+            <p>laura</p>
+        </div>
+        <div class="menu-img">
+            <img src="./assets/laura.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="menu-item">
+        <div class="menu-item-index">
+            <p>2020</p>
+            <p>la luce che fu</p>
+        </div>
+        <div class="menu-link menu-link-main">
+            <p>la luce che fu</p>
+        </div>
+        <div class="menu-link menu-link-hover">
+            <p>la luce che fu</p>
+        </div>
+        <div class="menu-img">
+            <img src="./assets/home.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="menu-item">
+        <div class="menu-item-index">
+            <p>Now</p>
+            <p>experimentations</p>
+        </div>
+        <div class="menu-link menu-link-main">
+            <p>experimentations</p>
+        </div>
+        <div class="menu-link menu-link-hover">
+            <p>experimentations</p>
+        </div>
+        <div class="menu-img">
+            <img src="./assets/laura.jpg" alt="">
+        </div>
+    </div>
+
+    <div class="menu-close"><p>Close</p></div>
+</div>
+
+<div class="container">
+    <div class="menu-open"><p>Menu</p></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        gsap.registerPlugin(CustomEase);
+
+        CustomEase.create(
+            "hop",
+            "M0,0 C0.091,0.543 0.148,0.662 0.277,0.786 0.405,0.909 0.596,0.979 1,1"
+        );
+
+        const menuOpen = document.querySelector(".menu-open");
+        const menuClose = document.querySelector(".menu-close");
+        const menu = document.querySelector(".menu");
+        const menuItems = document.querySelectorAll(".menu-item");
+        let isMenuOpen = false;
+
+        function splitTextIntoSpans(selector) {
+            let elements = document.querySelectorAll(selector);
+            elements.forEach((element) => {
+                let text = element.innerText;
+                let splitText = text
+                    .split("")
+                    .map((char) => `<span>${char === " " ? "&nbsp;&nbsp;" : char}</span>`)
+                    .join("");
+                element.innerHTML = splitText;
+            });
+        }
+
+        splitTextIntoSpans(".menu-link p");
+
+        gsap.set(".menu-close p", { y: 40 });
+        gsap.set(".menu-link p span", { y: 250 });
+
+        const handleMenu = () => {
+            gsap.to(menu, {
+                width: isMenuOpen ? "20vw" : "100vw",
+                duration: 1,
+                ease: "hop",
+            });
+
+            gsap.to(".menu-item", {
+                justifyContent: isMenuOpen ? "center" : "flex-start",
+                duration: 1,
+                ease: "power3.out",
+            });
+
+            gsap.to(".menu-item-index", {
+                alignItems: isMenuOpen ? "center" : "flex-start",
+                duration: 1,
+                ease: "power3.out",
+                onComplete: () => {
+                    isMenuOpen = !isMenuOpen; // Inverte lo stato
+                    menuItems.forEach((menuItem) => {
+                        if (isMenuOpen) {
+                            menuItem.classList.add("menu-opened");
+                        } else {
+                            menuItem.classList.remove("menu-opened");
+                        }
+                    });
+                }
+            });
+
+            gsap.to(".menu-close p", {
+                y: isMenuOpen ? 40 : 0,
+                duration: 1,
+                ease: "power3.out",
+            });
+
+            gsap.to(".menu-open p", {
+                y: isMenuOpen ? 0 : -40,
+                duration: 1,
+                ease: "power3.out",
+            });
+
+            menuItems.forEach((menuItem) => {
+                const menuItemLetters = menuItem.querySelectorAll(".menu-link p span");
+                gsap.to(menuItemLetters, {
+                    delay: isMenuOpen ? 0 : 0.25,
+                    y: isMenuOpen ? 250 : 0,
+                    duration: 1,
+                    stagger: isMenuOpen ? -0.075 : 0.075,
+                    ease: "power3.out",
+                });
+            });
+        };
+
+        menuOpen.addEventListener("click", handleMenu);
+        menuClose.addEventListener("click", handleMenu);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: "PP Neue Montreal";
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+p {
+    text-transform: uppercase; /* Corretto da "text-transformation" a "text-transform" */
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 100%;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    background: url(./assets/home.jpg) no-repeat 50% 50%;
+    background-size: cover;
+}
+
+.menu-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: #eee5d2;
+    z-index: 1;
+}
+
+.menu-close {
+    position: fixed;
+    top: 0;
+    right: 0;
+    color: #a39b89;
+    z-index: 10;
+}
+
+.menu-open,
+.menu-close {
+    margin: 0.75em;
+    padding: 0.75em;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); /* Corretto il separatore dei punti */
+    cursor: pointer;
+}
+
+.menu-open p,
+.menu-close p {
+    position: relative;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20vw; /* Corretto "20 vw" in "20vw" */
+    height: 100vh;
+    display: flex;
+    z-index: 2;
+}
+
+.menu-item {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex; /* Aggiunto per allineare gli elementi */
+    justify-content: center;
+    align-items: center;
+    background: #eee5d2;
+    border-left: 1.5px solid rgba(163, 155, 137, 0.35); /* Corretto il separatore dei valori RGBA */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    margin-left: -1px;
+}
+
+.menu-item-index {
+    height: 100%;
+    padding: 1.5em 0.5em 2em 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: #a39b89;
+}
+
+.menu-item-index p:nth-child(2) {
+    position: relative;
+    /*transform: rotate(-90deg);*/
+}
+
+.menu-link {
+    position: absolute;
+    bottom: 25%;
+    left: 55%;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+/*.menu-item:nth-child(3) .menu-link {
+    bottom: 7.5%;
+}*/
+
+.menu-link p {
+    position: relative;
+    display: flex;
+    font-family: "OPTICaslon-ExtraCondensed";
+    font-size: 50px;
+    font-weight: lighter;
+    transition: all 0.5s ease; /* Aggiunto ease per una transizione più fluida */
+}
+
+.menu-link p span {
+    position: relative;
+}
+
+.menu-item .menu-link-main,
+.menu-item .menu-link-hover {
+    transition: all 0.5s ease; /* Aggiunto ease per consistenza */
+}
+
+.menu-link-main p {
+    color: #2c221d;
+}
+
+.menu-item .menu-link-hover {
+    left: 150%; /* Rimossa la spaziatura extra prima dei due punti */
+    color: rgba(163, 155, 137, 0.35);
+}
+
+.menu-item:hover .menu-link-main {
+    left: -10%;
+}
+
+.menu-item:hover .menu-link-hover {
+    left: 50%;
+}
+
+/* Stile iniziale per le immagini del menu */
+.menu-img {
+    position: absolute;
+    width: 75%;
+    left: 50%; /* Posizionamento centralizzato orizzontalmente */
+    top: 25%;
+    transform: translate(-50%, -50%); /* Corretto il punto e virgola */
+    clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%); /* Non visibile inizialmente */
+    opacity: 0; /* Nasconde le immagini inizialmente */
+    transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.33, 1), clip-path 0.5s cubic-bezier(0.165, 0.84, 0.33, 1);
+}
+
+/* Quando si passa il mouse sopra un elemento del menu, mostra l'immagine */
+.menu-item:hover .menu-img {
+    opacity: 1; /* Rende l'immagine visibile */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); /* Clip-path pieno per l'immagine visibile */
+}
+
+@media (max-width: 900px) {
+    .menu {
+        flex-direction: column;
+    }
+
+    .menu-link {
+        bottom: unset;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    .menu-item:nth-child(3) .menu-link {
+        bottom: unset;
+    }
+
+    .menu-link p {
+        font-size: 30px;
+    }
+
+    .menu-link-hover {
+        display: none;
+    }
+
+    .menu-item: hover .menu-link-main {
+        top:50%;
+        left: 50%;
+    }
+
+    .menu-item-index {
+        align-items: center;
+    }
+
+    .menu-item-item p:nth-child(1) {
+        padding: 0 0.5em;
+    }
+
+    .menu-img {
+        display: none;
+    }
+
+}
